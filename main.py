@@ -105,7 +105,10 @@ async def unfree(_, msg: Message):
     if len(msg.command) < 2:
         await msg.reply("Usage: /unfree @username")
         return
-    target = msg.entities[1].user if msg.entities and len(msg.entities) > 1 else None
+try:
+    target = await app.get_users(msg.command[1])
+except:
+    target = None
     if not target:
         await msg.reply("Couldn't find that user.")
         return
