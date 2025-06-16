@@ -83,7 +83,7 @@ async def free(_, msg: Message):
         return
     user_mention = msg.command[1]
     duration = msg.command[2]
-    try:
+try:
     target = await app.get_users(msg.command[1])
 except:
     target = None
