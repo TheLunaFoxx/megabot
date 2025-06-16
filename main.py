@@ -10,7 +10,7 @@ import os  # Add this line if it's not already there
 API_ID = int(os.getenv("API_ID"))
 API_HASH = os.getenv("API_HASH")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-OWNER_ID = 7868250691
+OWNER_ID = int(os.getenv("OWNER_ID"))
 LOG_FILE = "verified_users.txt"
 
 app = Client("megabot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
@@ -83,7 +83,10 @@ async def free(_, msg: Message):
         return
     user_mention = msg.command[1]
     duration = msg.command[2]
-    target = msg.entities[1].user if msg.entities and len(msg.entities) > 1 else None
+    try:
+    target = await app.get_users(msg.command[1])
+except:
+    target = None
     if not target:
         await msg.reply("Couldn't find that user.")
         return
