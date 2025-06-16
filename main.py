@@ -5,9 +5,11 @@ from pyrogram import Client, filters, enums, idle
 from pyrogram.types import Message
 from keep_alive import keep_alive
 
-API_ID = 23633902
-API_HASH = "7b7cd87bcea1702a13312fc037a228d1"
-BOT_TOKEN = "7840523945:AAHcWktlvpPGGxuMYM_iCKOLP1GEz7G-N1o"
+import os  # Add this line if it's not already there
+
+API_ID = int(os.getenv("API_ID"))
+API_HASH = os.getenv("API_HASH")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 OWNER_ID = 7868250691
 LOG_FILE = "verified_users.txt"
 
