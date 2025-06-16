@@ -31,7 +31,7 @@ def parse_time(text):
 
 @app.on_message(filters.command("start") & filters.private)
 async def start(_, msg: Message):
-    print(f"[DEBUG] Received /start from {msg.from_user.id}")
+print(f"[DEBUG] Received /start from {msg.from_user.id}")
     await msg.reply_text(f"Welcome to Gamer Grindhouse Network Verification Bot {msg.from_user.mention}! 🎮\n\nClick /verify to continue ❤️")
 
 @app.on_message(filters.command("verify") & filters.private)
