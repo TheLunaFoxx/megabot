@@ -1,16 +1,15 @@
 import asyncio
+import os
 import re
 from datetime import datetime, timedelta
 from pyrogram import Client, filters, enums, idle
 from pyrogram.types import Message
 from keep_alive import keep_alive
 
-import os  # Add this line if it's not already there
-
 API_ID = int(os.getenv("API_ID"))
 API_HASH = os.getenv("API_HASH")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-OWNER_ID = int(os.getenv("OWNER_ID"))
+OWNER_ID = int(os.getenv("OWNER_ID", "7868250691"))
 LOG_FILE = "verified_users.txt"
 
 app = Client("megabot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
@@ -81,15 +80,15 @@ async def free(_, msg: Message):
     if len(msg.command) < 3:
         await msg.reply("Usage: /free @username 3d")
         return
-    user_mention = msg.command[1]
-    duration = msg.command[2]
-try:
-    target = await app.get_users(msg.command[1])
-except:
-    target = None
+    try:
+        target = await app.get_users(msg.command[1])
+    except:
+        target = None
     if not target:
         await msg.reply("Couldn't find that user.")
         return
+    user_mention = msg.command[1]
+    duration = msg.command[2]
     tdelta = parse_time(duration)
     if tdelta is None and duration != "0":
         await msg.reply("Invalid time format. Use 1d, 2h, 30m, or 0 for infinite.")
@@ -105,10 +104,10 @@ async def unfree(_, msg: Message):
     if len(msg.command) < 2:
         await msg.reply("Usage: /unfree @username")
         return
-try:
-    target = await app.get_users(msg.command[1])
-except:
-    target = None
+    try:
+        target = await app.get_users(msg.command[1])
+    except:
+        target = None
     if not target:
         await msg.reply("Couldn't find that user.")
         return
@@ -147,11 +146,12 @@ async def on_new_group(_, event):
 keep_alive()
 
 async def main():
+    print("⚠️ About to start asyncio loop...")
     await app.start()
     print("🤖 MegaBot is alive and slaying!")
     await idle()
+    print("💤 Bot has stopped idling (this usually means it quit)")
     await app.stop()
 
 if __name__ == "__main__":
-    import asyncio
     asyncio.run(main())
