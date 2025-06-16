@@ -146,11 +146,13 @@ async def on_new_group(_, event):
 keep_alive()
 
 async def main():
-    print("⚠️ About to start asyncio loop...")
+async def main():
+    print("⚠️ Starting main loop...")
     await app.start()
-    print("🤖 MegaBot is alive and slaying!")
+    me = await app.get_me()
+    print(f"✅ Logged in as @{me.username} (ID: {me.id})")
     await idle()
-    print("💤 Bot has stopped idling (this usually means it quit)")
+    print("🛑 Bot stopped!")
     await app.stop()
 
 if __name__ == "__main__":
