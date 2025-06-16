@@ -1,1 +1,2 @@
-start = "python3 main.py"
+[build]
+  start = "python3 main.py"
